@@ -331,10 +331,12 @@ progress {
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: none;
+  border-radius: 10px;
 }
 
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
+  border-radius: 10px;
 }
 
 ::-webkit-file-upload-button {

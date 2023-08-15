@@ -12,8 +12,6 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        
         <link rel="stylesheet" href="{{asset('css/sb-admin-2.min.css')}}">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- Scripts -->
@@ -45,10 +43,13 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
         <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
         <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+        <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <!-- Page level custom scripts -->
+        <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 
         
 
