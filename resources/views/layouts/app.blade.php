@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Yoma') }}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css"href="{{asset('fontawesome-free/css/all.min.css')}}">
@@ -42,6 +42,78 @@
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+        
+    {{-- <script>
+        $(document).ready(function() {
+            $('#enroll-form form').submit(function(e) {
+                e.preventDefault();
+    
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#enroll-messages').html('<div class="alert alert-success">' + response.success + '</div>');
+                    location.reload()
+                    },
+                    error: function(response) {
+                        $('#enroll-messages').html('<div class="alert alert-danger">' + response.responseJSON.error + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+     --}}
+     <script>
+        $(document).ready(function() {
+            $('#enroll-form form').submit(function(e) {
+                e.preventDefault();
+    
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#enroll-messages').html('<div class="alert alert-success">' + response.success + '</div>');
+                        refreshTable();
+                    },
+                    error: function(response) {
+                        $('#enroll-messages').html('<div class="alert alert-danger">' + response.responseJSON.error + '</div>');
+                    }
+                });
+            });
+        });
+    
+        function refreshTable() {
+            $("#dataTable").load("{{route('course-api')}}");
+        }
+    </script>
+     <script>
+        $(document).ready(function() {
+            $('#enrolled-courses').on('click', '.remove-course', function() {
+                var courseId = $(this).data('course-id');
+                // var removeButton = $(this);
+    
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("remove-course") }}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        courseId: courseId
+                    },
+                    success: function(response) {
+                        $('#enroll-message').html('<div class="alert alert-success">' + response.success + '</div>');
+                      
+                        location.reload()
+                    },
+                    error: function(response) {
+                        $('#enroll-message').html('<div class="alert alert-danger">' + response.responseJSON.error + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+    
         <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>

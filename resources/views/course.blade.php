@@ -1,13 +1,13 @@
 <x-app-layout>
 
             <div class="container-fluid">
-                @if(session('success'))
+                {{-- @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
     
             @if(session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
+            @endif --}}
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Courses</h1>
@@ -40,7 +40,7 @@
                     <a href="#" class="d-sm-inline btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#courseModal"><i
                             class="fas fa-add fa-sm text-white-50"></i>Add New Course</a>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     @foreach($user->courses as $index =>  $item)
                  <div class="col-lg-12">
 
@@ -63,49 +63,69 @@
                     </div>
                     @endforeach
 
-                </div>
+                </div> --}}
+              
+                
+                    {{-- <div id="enrolled-courses">
+                        <h3>Enrolled Courses:</h3>
+                        <ul>
+                            @foreach ($user->courses as $item)
+                                <li>
+                                    {{ $item->courseTitle }}
+                                    <button class="btn btn-danger btn-sm remove-course" data-course-id="{{ $item->courseId }}">Remove</button>
+                                </li>
+                            @endforeach
+                        </ul>
+                 
+                    <div id="enroll-message"></div>
+                    </div> --}}
+         
+                
+
                 <div class="card shadow mt-4 mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Table of Courses</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+
+                            <div id="enrolled-courses" class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                   
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Name </th>
+                                            <th>Description</th>
                                             <th>Course Code</th>
                                             <th>Schedule</th>
                                             <th>Progress</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Course Code</th>
-                                            <th>Scheule</th>
-                                            <th>Progress</th>
-                                        </tr>
-                                    </tfoot>
+                                  
+    
                                    
                                     <tbody>
                                         @foreach ($user->courses as $item)
                                         <tr>
                                             <td>{{$item->courseTitle}}</td>
+                                            <td>{{$item->courseDesc}}</td>
                                             <td>{{$item->courseCode}}</td>
                                             <td>{{$item->courseSchedule}}</td>
                                             <td>{{$item->courseProg}}%</td>
+                                            <td>
+                    <button class="btn btn-danger btn-sm remove-course" data-course-id="{{$item->courseId}}">Remove</button>
+                                            </td>
                                             
                                         </tr>
                                         @endforeach
-                                        
+                                        <div id="enroll-message"></div>
                                     </tbody>
-                                  
+    
+              
                                 </table>
                             </div>
                         </div>
                     </div>
+                 
             </div>
             <!-- /.container-fluid -->
 
@@ -116,7 +136,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
+                    <span>Copyright &copy; Your Website</span>
                 </div>
             </div>
         </footer>
@@ -131,30 +151,36 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('enroll') }}">
-                        @csrf
-                
-                        <label for="courses">Select Courses:</label>
-                        <select class="form-select"name="courses[]" id="courses"  aria-label="Default select example">
-                            <option selected>Select Course</option>
-                            @foreach ($availableCourses as $course)
-                                <option value="{{ $course->courseId }}">{{ $course->courseTitle }}</option>
-                            @endforeach
-                        </select>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary text-black" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary text-black" type="submit">Enroll</button>
+                <div id="enroll-form">
+                    <div class="modal-body">
+                       
+                        <form method="post" action="{{ route('enroll') }}">
+                            @csrf
                     
+                            <label for="courses">Select Courses:</label>
+                            <select class="form-select"name="courses[]"  id="courses"   aria-label="Default select example">
+                                <option selected>Select Course</option>
+                                @foreach ($availableCourses as $course)
+                                    <option value="{{ $course->courseId }}">{{ $course->courseTitle }}</option>
+                                @endforeach
+                            </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary text-black" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary text-black" type="submit">Enroll</button>
+                        
+                    </div>
+                </form>
+                    
+                    <div class="card-footer">
+                        <div id="enroll-messages"></div>
+                    </div>
                 </div>
-            </form>
             </div>
         </div>
     </div>
     
    
     <!-- End of Content Wrapper -->
-
 
 </x-app-layout>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
+    
    
     public function index()
     {
@@ -33,17 +34,41 @@ class CourseController extends Controller
         $coursesToEnroll = $request->input('courses', []);
         $user = User::with('courses')->find($studentId);
         $alreadyEnrolled = $user->courses->pluck('courseId')->intersect($coursesToEnroll);
+        
         if ($alreadyEnrolled->count() > 0) {
             $courseTitles = Course::whereIn('courseId', $alreadyEnrolled)->pluck('courseTitle')->implode(', ');
-            return redirect()->route('course')->with('error', "You are already enrolled in the following courses: $courseTitles.");
+            return response()->json(['error' => "You are already enrolled in the following course(s): $courseTitles."], 422);
         }
+    
         $user->courses()->syncWithoutDetaching($coursesToEnroll);
-        
-
-        return redirect()->route('course')->with('success', 'Enrollment successful.');
+    
+        return response()->json(['success' => 'Enrollment successful.']);
+    }
+   
+    public function loadOnlyCourses()
+    {
+        //same code as index()
+            $studentId = Auth::user()->studentId;
+         
+            $user = User::with('courses')->find($studentId);
+       
+        return view('course-only', 
+        [
+            'user' => $user,
+        ]);
+    }
+    public function removeCourse(Request $request)
+    {
+        $studentId = Auth::user()->studentId;
+        $courseId = $request->input('courseId');
+        $user = User::find($studentId);
+    
+        $user->courses()->detach($courseId);
+    
+        return response()->json(['success' => 'Course removed successfully.']);
     }
     
-    
+
  
 
 }

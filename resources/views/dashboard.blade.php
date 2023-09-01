@@ -94,7 +94,7 @@
                             <div class="card-body">
                                
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered"  width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Day</th>
@@ -228,13 +228,16 @@
                                     <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
                                         src="images/undraw_posting_photo.svg" alt="...">
                                 </div>
+                                <div class="row">
+                                    
                                 @foreach($user->courses as $item)
 
-                                <h4 class="mb-4 font-weight-bold">{{$item->courseTitle}}<span
-                                        class="float-right"><a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a></span></h4>
+                                <h5 class="mb-2 font-weight-bold">{{$item->courseTitle}}<span
+                                        class="float-right"><a href="#" class="d-none d-sm-inline-block btn btn-xs btn-primary shadow-sm"><i
+                                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a></span></h5>
                                 
                                 @endforeach
+                                </div>
                             </div>
                         </div>
 

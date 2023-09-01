@@ -30,6 +30,12 @@ Route::get('/course', [CourseController::class, 'index'])
 Route::post('/enroll', [CourseController::class, 'enroll'])
     ->middleware(['auth', 'verified'])
     ->name('enroll');
+Route::get('/course-api', [CourseController::class, 'loadOnlyCourses'])
+->middleware(['auth', 'verified'])
+->name('course-api');
+Route::post('/remove-course', [CourseController::class, 'removeCourse'])
+->middleware(['auth', 'verified'])->name('remove-course');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
