@@ -20,7 +20,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Number of courses for the semester</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$courseCount}}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$courseCCount}}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>

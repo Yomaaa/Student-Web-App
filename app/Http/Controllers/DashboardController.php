@@ -16,43 +16,50 @@ class DashboardController extends Controller
      */
     
  
-     public function index(){
-        $studentId = Auth::user()->studentId;
-        
-        //  $course = DB::table('courses')
-        //  ->get();
-        //  $countCourse = DB::table('courses')->count();
-         $courseDate = User::find($studentId)->courses()
-         ->orderByRaw("
-         CASE
-             WHEN courseSchedule = 'Monday' THEN 1
-             WHEN courseSchedule = 'Tuesday' THEN 2
-             WHEN courseSchedule = 'Wednesday' THEN 3
-             WHEN courseSchedule = 'Thursday' THEN 4
-             WHEN courseSchedule = 'Friday' THEN 5
-             WHEN courseSchedule = 'Saturday' THEN 6
-             WHEN courseSchedule = 'Sunday' THEN 7
-             ELSE 8
-         END")
-         ->get();
-         $lecturer = DB::table('lecturers')->count();
-         $allStudents = DB::table('users')->count();
-         $courseCount = User::find($studentId)->courses()->count();
-         $usersd = User::with('courses')->find($studentId);
-         return view('dashboard', 
-         [
-            'user' => $usersd,
-            // 'course' => $course,
-            'lecturer' => $lecturer, 
-            'student'=> $allStudents, 
-            'courseCount' => $courseCount,
-            'courseDate' => $courseDate
+     public function index()
+{
+    // Retrieve the student's ID from the currently authenticated user
+    $studentId = Auth::user()->studentId;
 
-         ]
-         
-         
-     );
-    }
+    // Retrieve the student's course data and order them by the day of the week
+    // This code orders courses by day with Monday first, Tuesday second, and so on
+    $courseDate = User::find($studentId)
+        ->courses()
+        ->orderByRaw("
+        CASE
+            WHEN courseSchedule = 'Monday' THEN 1
+            WHEN courseSchedule = 'Tuesday' THEN 2
+            WHEN courseSchedule = 'Wednesday' THEN 3
+            WHEN courseSchedule = 'Thursday' THEN 4
+            WHEN courseSchedule = 'Friday' THEN 5
+            WHEN courseSchedule = 'Saturday' THEN 6
+            WHEN courseSchedule = 'Sunday' THEN 7
+            ELSE 8
+        END")
+        ->get();
+
+    // Count the number of lecturers in the database
+    $lecturer = DB::table('lecturers')->count();
+
+    // Count the total number of students in the database
+    $allStudents = DB::table('users')->count();
+
+    // Count the number of courses that the student is enrolled in
+    $courseCount = User::find($studentId)->courses()->count();
+
+    // Retrieve the user data along with their associated courses
+    $usersd = User::with('courses')->find($studentId);
+
+    // Pass the collected data to the 'dashboard' view
+    return view('dashboard', [
+        'user' => $usersd,
+        'lecturer' => $lecturer,
+        'student' => $allStudents,
+        'courseCCount' => $courseCount,
+        'courseDate' => $courseDate
+    ]);
+}
+
 
     /**
      * Show the form for creating a new resource.
